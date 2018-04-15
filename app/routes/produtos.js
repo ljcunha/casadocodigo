@@ -4,25 +4,87 @@ module.exports = function(app){
         console.log("Listando...");     
 
         var conn = app.infra.connectionFactory;
+        var produtosDAO = new app.infra.ProdutosDAO(conn);
 
-        var ProdutosDAO = new app.infra.ProdutosDAO(conn);
-
-        ProdutosDAO.lista(function(err, results){
-            res.render('produtos/lista', {lista: results});
+        produtosDAO.lista(function(err, results){
+            res.format({
+                html: function(){
+                    res.render('produtos/lista', {lista: results});
+                },
+                json: function(){
+                    res.json(results);
+                }
+            });
+            
         });   
 
         conn.end;
     });
-    
-    app.get('produtos/remove', function(){
 
+    app.get('/produtos/:Id', function(req,res){
         var conn = app.infra.connectionFactory;
-        var produtosBanco = app.infra.produtosBanco(conn);
-        var produto = produtosBanco.carrega(conn,id,callback);
-    
-        if(produto){
-            produtosBanco.remove(conne,produto,callback);
-        }
-    
+        var produtosDAO = new app.infra.ProdutosDAO(conn);
+        var Id = req.params.Id;
+        console.log(Id);
+
+        produtosDAO.carrega(Id, function(err,results){
+            res.format({
+                html: function(){
+                    res.render('produtos/lista', {lista: results});
+                },
+                json: function(){
+                    res.json(results);
+                }
+            });
+        });
+
+        conn.end;
+
     });
+    
+    app.get('/produtos/form', function(req,res){
+        console.log("Carregando form de produtos...");
+        res.render('produtos/form');
+    });
+
+    app.post('/produtos', function(req,res){
+        var produto = req.body;
+        var conn = app.infra.connectionFactory;
+
+        var produtosDAO = new app.infra.ProdutosDAO(conn);
+
+        produtosDAO.salva(produto,function(err,results){
+            res.redirect('/produtos');
+        });
+
+        conn.end;
+    });
+
+    app.delete('/produtos', function(req,res){
+        var produto = req.body;
+        var conn = app.infra.connectionFactory;
+
+        var produtosDAO = new app.infra.ProdutosDAO(conn);
+
+        produtosDAO.apagar(produto,function(err,results){
+            res.redirect('/produtos');
+        });
+
+        conn.end;
+    });
+
+    app.put('/produtos', function(req,res){
+        var produto = req.body;
+        var conn = app.infra.connectionFactory;
+
+        var produtosDAO = new app.infra.ProdutosDAO(conn);
+
+        produtosDAO.alterar(produto,function(err,results){
+            res.redirect('/produtos');
+        });
+
+        conn.end;
+    });
+
+    
 }
