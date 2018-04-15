@@ -3,12 +3,18 @@
         <table border=1px>
             <tr>
                 <td>Id</td>
+                <td>Título</td>
                 <td>Descrição</td>
+                <td>Preço</td>
             </tr>
-            <tr>
-                <td>1</td>
-                <td>Livro de node.js</td>
-            </tr>
+            <% for(var i = 0;i<lista.length;i++){ %>
+                <tr>
+                    <td><%=lista[i].Id%></td>
+                    <td><%=lista[i].Titulo%></td>
+                    <td><%=lista[i].Descricao%></td>
+                    <td><%=lista[i].Preco%></td>
+                </tr>
+            <%}%>
         </table>
     </body>
 </html>
