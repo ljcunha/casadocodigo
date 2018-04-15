@@ -5,16 +5,24 @@ module.exports = function(app){
 
         var conn = app.infra.connectionFactory;
 
-        var produtosBanco = app.infra.produtosBanco(conn);
+        var ProdutosDAO = new app.infra.ProdutosDAO(conn);
 
-        produtosBanco.lista(function(err, results){
+        ProdutosDAO.lista(function(err, results){
             res.render('produtos/lista', {lista: results});
         });   
 
         conn.end;
     });
     
-   // app.get('/produtos/detalhe', function(req,res){
+    app.get('produtos/remove', function(){
 
-   // });
+        var conn = app.infra.connectionFactory;
+        var produtosBanco = app.infra.produtosBanco(conn);
+        var produto = produtosBanco.carrega(conn,id,callback);
+    
+        if(produto){
+            produtosBanco.remove(conne,produto,callback);
+        }
+    
+    });
 }
