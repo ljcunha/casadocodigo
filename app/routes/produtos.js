@@ -20,7 +20,7 @@ module.exports = function(app){
 
         conn.end;
     });
-
+/*
     app.get('/produtos/:Id', function(req,res){
         var conn = app.infra.connectionFactory;
         var produtosDAO = new app.infra.ProdutosDAO(conn);
@@ -41,10 +41,11 @@ module.exports = function(app){
         conn.end;
 
     });
+    */
     
     app.get('/produtos/form', function(req,res){
         console.log("Carregando form de produtos...");
-        res.render('produtos/form');
+        res.render('produtos/form',{validationErrors:{},produto:{}});
     });
 
     app.post('/produtos', function(req,res){
@@ -52,6 +53,16 @@ module.exports = function(app){
         var conn = app.infra.connectionFactory;
 
         var produtosDAO = new app.infra.ProdutosDAO(conn);
+
+        req.assert('titulo','Título é obrigatório').notEmpty();
+        req.assert('preco','Formato inválido').isFloat();      
+
+        var errors = req.validationErrors();
+        if(errors){
+            res.render('produtos/form',{validationErrors:errors,produto:produto});
+            return;
+        }
+
 
         produtosDAO.salva(produto,function(err,results){
             res.redirect('/produtos');
