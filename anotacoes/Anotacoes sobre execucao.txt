@@ -1,0 +1,7 @@
+-- Executar convencional
+
+node <<arquivo js>>
+
+-- Executar automático
+
+nodemon <<arquivo js>>

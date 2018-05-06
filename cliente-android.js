@@ -3,7 +3,7 @@ var http = require('http');
 var configuracoes = {
     hostname: 'localhost',
     port:3000,
-    path: '/produtos/5',
+    path: '/produtos',
     headers: {
         'Accept':'application/json'
        // 'Accept':'text/html'

@@ -59,7 +59,15 @@ module.exports = function(app){
 
         var errors = req.validationErrors();
         if(errors){
-            res.render('produtos/form',{validationErrors:errors,produto:produto});
+            res.status(400);
+            res.format({
+                html:function(){
+                    res.render('produtos/form',{validationErrors:errors,produto:produto});
+                },
+                json:function(){
+                    res.send(errors);
+                }
+            });            
             return;
         }
 
