@@ -1,12 +1,25 @@
 var mysql = require('mysql');  
 
 function dbConnection(){
-    return mysql.createConnection({
-            host: 'localhost',
-            user: 'developer',
-            password: 'K@t@n@07',
-            database: 'CasaDoCodigo',
-    });
+    if(!process.env.NODE_ENV){
+        return mysql.createConnection({
+                host: 'localhost',
+                user: 'developer',
+                password: '123456',
+                database: 'CasaDoCodigo',
+        });
+    }
+
+    if(process.env.NODE_ENV == 'test'){
+        return mysql.createConnection({
+                host: 'localhost',
+                user: 'developer',
+                password: '123456',
+                database: 'CasaDoCodigo_test',
+        });
+    }
+
+
 }
 
 module.exports = function(){

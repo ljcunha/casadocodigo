@@ -1,6 +1,6 @@
 var app = require('./config/express')();
 
-//A linha abaixo perdema função qdo utilizamos espress-load
+//A linha abaixo perdem a função qdo utilizamos espress-load
 //var rotaProdutos = require('./app/routes/produtos')(app);
 
 

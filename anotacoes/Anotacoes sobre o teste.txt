@@ -1,3 +1,6 @@
 -- Para executar:
 
 node_modules/mocha/bin/mocha
+
+-- Executar em ambiente de test
+NODE_ENV=test node_modules/mocha/bin/mocha
