@@ -6,9 +6,10 @@ describe('#ProdutosController',function(){
     beforeEach(function(done){
         var conn = express.infra.connectionFactory;
         conn.query("delete from produtos", function(ex,result){
-            if(!ex) {
+            /*if(!ex) {
                 done();
-            }
+            }*/
+            done();
         });
     });
 
@@ -17,7 +18,8 @@ describe('#ProdutosController',function(){
         .set('Accept','application/json')
         .expect('Content-Type',/json/)
         .expect(200,done);
-        });
+    });
+
     it('#listagem html',function(done){
         request.get('/produtos')
         .set('Accept','text/html')
@@ -33,5 +35,5 @@ describe('#ProdutosController',function(){
         request.post('/produtos')
         .send({titulo:"Livro Bolado",descricao:"Livro qualquer", preco:52.00})
         .expect(302,done);
-    });
+    });   
 });

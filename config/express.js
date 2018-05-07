@@ -12,6 +12,7 @@ module.exports = function (){
     //Definindo onde está a pasta de views
     app.set('views','./app/views');
 
+    app.use(express.static('./public'));
     app.use(bodyParser.urlencoded({extended:true}));
     app.use(bodyParser.json());
     app.use(expressValidator());
